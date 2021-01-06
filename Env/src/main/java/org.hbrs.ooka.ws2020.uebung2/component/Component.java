@@ -1,15 +1,18 @@
 package org.hbrs.ooka.ws2020.uebung2.component;
 
+import org.hbrs.ooka.ws2020.uebung2.observer.Event;
 import org.hbrs.ooka.ws2020.uebung2.util.state.ComponentState;
 import org.hbrs.ooka.ws2020.uebung2.util.state.Stopped;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 
 public class Component {
-    private ComponentState state = new Stopped();
+
     private ClassLoader classLoader;
     //private List<String> name;
     //private List<Class> c;
@@ -18,6 +21,9 @@ public class Component {
     private Method end;
     private String name;
     private List<Field> inject;
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private Event event = null;
+    private ComponentState state = initState();
 
 
     public List<Field> getInject(){
@@ -62,7 +68,11 @@ public class Component {
     public Method getStart() {
         return start;
     }
+    public ComponentState initState(){
+        this.state = new Stopped();
 
+        return new Stopped();
+    }
     public Method getEnd() { return end; }
     public void setStop(Method stop){ end = stop;}
     public Method getStop() { return end;}
@@ -72,14 +82,17 @@ public class Component {
 
     public void previousState() {
         state.prev(this);
+
     }
 
     public void nextState() {
         state.next(this);
+
     }
 
     public void printStatus() {
         state.printStatus();
     }
+
 
 }

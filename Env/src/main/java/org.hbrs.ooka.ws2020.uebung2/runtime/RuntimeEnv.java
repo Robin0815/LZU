@@ -4,12 +4,14 @@ import org.hbrs.ooka.ws2020.uebung2.assembler.ComponentAssembler;
 import org.hbrs.ooka.ws2020.uebung2.assembler.ComponentThread;
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RuntimeEnv {
 
-    private List<ComponentThread> list = new ArrayList<>();
+    private List<ComponentThread> list = new ArrayList();
 
     public String initComponent(String name, String path) throws Exception{
         ComponentAssembler comAss = new ComponentAssembler();
@@ -57,6 +59,7 @@ public class RuntimeEnv {
             if(com.getName().equals(name)){
                 try {
                     com.stopComponentThread();
+                    Thread.sleep(50);
                     com.interrupt();
                     return "Stopped: "+name;
                 }catch(Exception e){
@@ -88,4 +91,6 @@ public class RuntimeEnv {
         }
         return sBuilder.toString();
     }
+
+
 }

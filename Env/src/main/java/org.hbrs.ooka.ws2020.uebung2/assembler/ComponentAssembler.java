@@ -1,9 +1,12 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
+import org.hbrs.ooka.ws2020.uebung2.annotation.Start;
+import org.hbrs.ooka.ws2020.uebung2.annotation.Stop;
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
-import org.hbrs.ooka.ws2020.uebung2.logger.Inject;
+import org.hbrs.ooka.ws2020.uebung2.annotation.Inject;
 import org.hbrs.ooka.ws2020.uebung2.logger.LoggerFactory;
 import org.hbrs.ooka.ws2020.uebung2.logger.LoggerInterface;
+import org.hbrs.ooka.ws2020.uebung2.observer.ObsServer;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -40,17 +43,17 @@ public class ComponentAssembler {
         }
 
 
-        Class startAno = com.getClass("Start");
-        Class stopAno = com.getClass("Stop");
+        /*Class startAno = com.getClass("Start");
+        Class stopAno = com.getClass("Stop");*/
 
         System.out.println();
         Method startMethod = null;
         Method stopMethod = null;
         for (Class cla : com.getKlass()) {
             for (Method me : cla.getMethods()) {
-                if (me.isAnnotationPresent(startAno)){
+                if (me.isAnnotationPresent(Start.class)){
                     startMethod = me;}
-                if (me.isAnnotationPresent(stopAno)){
+                if (me.isAnnotationPresent(Stop.class)){
                     stopMethod = me;}
                 //System.out.println(me.getAnnotations().getClass().getName());
             }
@@ -74,7 +77,16 @@ public class ComponentAssembler {
                 } catch (IllegalAccessException illegalAccessException) {
                     illegalAccessException.printStackTrace();
                 }
-                System.out.println("Inject Worked");
+                System.out.println("Inject Logger Worked");
+            }
+            if (field.getType().isAssignableFrom(ObsServer.class)) {
+                field.setAccessible(true);
+                try {
+                    field.set(null, ObsServer.getInstance());
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                }
+                System.out.println("Inject Observer Worked");
             }
         }
 
