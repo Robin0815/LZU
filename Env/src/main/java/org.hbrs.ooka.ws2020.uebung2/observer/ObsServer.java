@@ -1,5 +1,7 @@
 package org.hbrs.ooka.ws2020.uebung2.observer;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import org.hbrs.ooka.ws2020.uebung2.assembler.ComponentThread;
 import org.hbrs.ooka.ws2020.uebung2.component.Component;
 
@@ -7,9 +9,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ObsServer implements PropertyChangeListener {
+public class ObsServer {
 
     public static Event event = new Event();
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -22,34 +26,26 @@ public class ObsServer implements PropertyChangeListener {
         return instance;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
+
+    //private Map<String, Subscriber> subscribers = new HashMap<>();
+    List<Subscriber> subscribers = new ArrayList<>();
+
+    public void subscribe(Subscriber subscriber){
+        if(!subscribers.contains(subscriber)){
+            subscribers.add(subscriber);
+        }
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
+    public void unsubscribe(Subscriber subscriber){
+        subscribers.remove(subscriber);
     }
-
-    public void registerSubPub(SubPub pcl){
-        this.addPropertyChangeListener(pcl);
-        pcl.addPropertyChangeListener(this);
-    }
-
-    public void removeSubPub(SubPub pcl){
-        this.removePropertyChangeListener(pcl);
-        pcl.removePropertyChangeListener(this);
-    }
-    public void setEvent(Event value) {
-        support.firePropertyChange("Event", this.event, value);
-        //System.out.println(value.toString());
-        this.event = value;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if(evt.getNewValue() instanceof Event){
-            Event value = (Event) evt.getNewValue();
-            setEvent(value);
+    public void ownNotify(Event event){
+        if(subscribers.size() > 0){
+            for(Subscriber subscriber : subscribers){
+                if(subscriber.topic().equals(event.topic)){
+                    subscriber.update(event);
+                }
+            }
         }
     }
 }
