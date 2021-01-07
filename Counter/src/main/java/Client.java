@@ -59,4 +59,8 @@ public class Client implements Subscriber {
     public void update(Event event){
         System.out.println("Name: "+event.compName+" Status: "+event.state);
     }
+    @Override
+    public String topic(){
+        return "Test";
+    }
 }
