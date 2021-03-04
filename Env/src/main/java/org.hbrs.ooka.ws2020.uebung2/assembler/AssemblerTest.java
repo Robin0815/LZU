@@ -1,15 +1,19 @@
 package org.hbrs.ooka.ws2020.uebung2.assembler;
 
 import org.hbrs.ooka.ws2020.uebung2.view.CLI;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class AssemblerTest {
+public class AssemblerTest extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         /*RuntimeEnv re = new RuntimeEnv();
                 re.initComponent("Counter");
                 re.startComp("Counter");*/
 
-        CLI cli = new CLI();
-        cli.startCli();
+        SpringApplication.run(AssemblerTest.class, args);
+        //CLI cli = new CLI();
+        //cli.startCli();
 
         /*Component com = con.search("Client");
         Class cla = com.getC();
