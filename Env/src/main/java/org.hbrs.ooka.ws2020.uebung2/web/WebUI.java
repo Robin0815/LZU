@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -28,16 +29,18 @@ public class WebUI extends VerticalLayout {
     public WebUI(){
         TextField textField = new TextField("");
         textField.addThemeName("bordered");
-
+        HorizontalLayout console = new HorizontalLayout();
         TextArea textArea = new TextArea();
         textArea.setValue("New RuntimeEnviroment started: \nPlease type command (init, delete, start, stop, state, allstate)\n" +
                 "init: needs to be followed by component name and path to jar file\n" +
                 "delete, start, stop just needs the name of the component\n" +
                 "allstate needs no additional infos\n" +
                 "an existing config in backup.txt can be loaded by loadconfig\n");
-        textArea.addKeyPressListener() {
+        Button button = new Button("Say hello",
+                e -> textArea.setValue(textField.getValue()));
+        button.addClickShortcut(Key.ENTER);
 
-
-        add(textField, textArea, b);
+        console.add(textField, button);
+        add(console, textArea);
     }
 }
