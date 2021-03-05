@@ -25,8 +25,8 @@ import java.util.List;
         enableInstallPrompt = false)
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
-public class WebUI extends VerticalLayout {
-    public WebUI(){
+public class MainView extends VerticalLayout {
+    public MainView(){
         TextField textField = new TextField("");
         textField.addThemeName("bordered");
         HorizontalLayout console = new HorizontalLayout();

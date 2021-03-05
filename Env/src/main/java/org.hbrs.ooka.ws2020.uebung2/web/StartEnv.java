@@ -1,18 +1,18 @@
-package org.hbrs.ooka.ws2020.uebung2.assembler;
+package org.hbrs.ooka.ws2020.uebung2.web;
 
-import org.hbrs.ooka.ws2020.uebung2.view.CLI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@SpringBootApplication
-public class AssemblerTest extends SpringBootServletInitializer {
-    public static void main(String[] args) throws Exception {
+@SpringBootApplication//(scanBasePackages = {"org.hbrs.ooka.ws2020.uebung2"})
+public class StartEnv extends SpringBootServletInitializer {
+    public static void main(String[] args) {
         /*RuntimeEnv re = new RuntimeEnv();
                 re.initComponent("Counter");
                 re.startComp("Counter");*/
-        System.setProperty("server.port", "8081");
-        SpringApplication.run(AssemblerTest.class, args);
+        //System.setProperty("server.port", "8081");
+        //System.setProperty("spring.profiles.active", "dev");
+        SpringApplication.run(StartEnv.class, args);
         //CLI cli = new CLI();
         //cli.startCli();
 
