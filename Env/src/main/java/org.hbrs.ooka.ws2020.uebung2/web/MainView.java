@@ -36,10 +36,13 @@ public class MainView extends VerticalLayout {
                 "delete, start, stop just needs the name of the component\n" +
                 "allstate needs no additional infos\n" +
                 "an existing config in backup.txt can be loaded by loadconfig\n");
-        Button button = new Button("Say hello",
+        Button button = new Button("Enter Command",
                 e -> textArea.setValue(textField.getValue()));
         button.addClickShortcut(Key.ENTER);
 
+        textArea.setWidth("1500px");
+        textArea.setHeight("800px");
+        textArea.setMaxWidth("80vw");
         console.add(textField, button);
         add(console, textArea);
     }
